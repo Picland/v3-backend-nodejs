@@ -57,3 +57,10 @@ typings/
 # dotenv environment variables file
 .env
 
+# OS
+.DS_STORE
+
+# IDE
+.vscode
+
+# Project
