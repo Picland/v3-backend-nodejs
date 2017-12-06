@@ -3,12 +3,12 @@ import { ObjectID } from 'mongolass'
 
 export default {
     // 注册一个用户
-    async insert (user) {
+    insert (user) {
         return User.insert(user).exec()
     },
 
     // 通过手机号码获取用户信息
-    async getUserByPhone (phoneNumber) {
+    getUserByPhone (phoneNumber) {
         return User
             .findOne({ phoneNumber: phoneNumber })
             .addCreatedAt()
@@ -16,7 +16,7 @@ export default {
     },
 
     // 通过userid码获取用户信息
-    async getUserById (userid) {
+    getUserById (userid) {
         return User
             .findOne({_id: ObjectID(userid)})
             .addCreatedAt()
