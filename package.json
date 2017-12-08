@@ -21,7 +21,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "node $NODE_DEBUG_OPTION babel.register.js",
+      "command": "nodejs-dashboard --port=8002 -- node -r nodejs-dashboard $NODE_DEBUG_OPTION babel.register.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 3000
@@ -79,6 +79,7 @@
     "moment": "^2.19.2",
     "mongolass": "^3.1.5",
     "mysql": "^2.15.0",
+    "nodejs-dashboard": "^0.4.3",
     "objectid-to-timestamp": "1.3.0",
     "pm2": "^2.4.6",
     "res.api": "^1.0.11",
