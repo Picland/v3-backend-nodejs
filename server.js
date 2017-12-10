@@ -9,7 +9,7 @@ import favicon from 'serve-favicon'
 import resApi from 'res.api'
 import pkg from './package.json'
 import formidable from './src/middleware/formidable'
-import renderService from './src/service/renderService'
+// import renderService from './src/service/renderService'
 import api from './src/api'
 
 const server = express()
@@ -62,11 +62,11 @@ api(server)
 // --------------------------------------------------------------------------
 // Turn over others page to client router and render
 // --------------------------------------------------------------------------
-server.use((req, res) => {
-    if (!res.headersSent) {
-        res.status(200).send(renderService(req.url))
-    }
-})
+// server.use((req, res) => {
+//     if (!res.headersSent) {
+//         res.status(200).send(renderService(req.url))
+//     }
+// })
 
 // --------------------------------------------------------------------------
 // Error Log
@@ -87,5 +87,5 @@ server.use(expressWinston.errorLogger({
 // Start the Server
 // --------------------------------------------------------------------------
 server.listen(config.port, () => {
-    console.log(`✅ ${pkg.name} listening on http://localhost:${config.port}`)
+    console.log(`${pkg.name} listening on http://localhost:${config.port}`)
 })

@@ -11,6 +11,7 @@
   },
   "scripts": {
     "dev": "better-npm-run dev",
+    "dev:debug": "better-npm-run dev:debug",
     "presandbox": "better-npm-run presandbox",
     "sandbox": "better-npm-run sandbox",
     "sandbox:debug": "better-npm-run sandbox:debug",
@@ -21,31 +22,38 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodejs-dashboard --port=8002 -- node -r nodejs-dashboard $NODE_DEBUG_OPTION babel.register.js",
+      "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard $NODE_DEBUG_OPTION babel.register.js",
       "env": {
         "NODE_ENV": "development",
-        "PORT": 3000
+        "PORT": 8888
+      }
+    },
+    "dev:debug": {
+      "command": "node $NODE_DEBUG_OPTION babel.register.js",
+      "env": {
+        "NODE_ENV": "development",
+        "PORT": 8888
       }
     },
     "sandbox": {
       "command": "pm2 start babel.register.js --name 'earth-sanbox'",
       "env": {
         "NODE_ENV": "sandbox",
-        "PORT": 8890
+        "PORT": 8888
       }
     },
     "sandbox:debug": {
       "command": "node $NODE_DEBUG_OPTION babel.register.js",
       "env": {
         "NODE_ENV": "sandbox",
-        "PORT": 8890
+        "PORT": 8888
       }
     },
     "prod": {
       "command": "pm2 start babel.register.js --name 'earth-production'",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 8892
+        "PORT": 8888
       }
     }
   },
