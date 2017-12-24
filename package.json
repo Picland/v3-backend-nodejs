@@ -11,7 +11,7 @@
   },
   "scripts": {
     "dev": "better-npm-run dev",
-    "dev:debug": "better-npm-run dev:debug",
+    "dev:dashboard": "better-npm-run dev:dashboard",
     "presandbox": "better-npm-run presandbox",
     "sandbox": "better-npm-run sandbox",
     "sandbox:debug": "better-npm-run sandbox:debug",
@@ -22,14 +22,14 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard $NODE_DEBUG_OPTION babel.register.js",
+      "command": "node $NODE_DEBUG_OPTION babel.register.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 8888
       }
     },
-    "dev:debug": {
-      "command": "node $NODE_DEBUG_OPTION babel.register.js",
+    "dev:dashboard": {
+      "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard $NODE_DEBUG_OPTION babel.register.js",
       "env": {
         "NODE_ENV": "development",
         "PORT": 8888
