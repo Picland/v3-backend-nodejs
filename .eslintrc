@@ -6,15 +6,5 @@
     "node": true,
     "es6": true,
   },
-  "globals": {
-    __CLIENT__: true,
-    __SERVER__: true,
-    __DEVELOPMENT__: true,
-    __DEVTOOLS__: true,
-    runtime: true
-  },
   "parser": "babel-eslint",
-  "rules": {
-    "indent": ["error", 4]
-  }
 }
