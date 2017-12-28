@@ -3,7 +3,6 @@
  */
 
 import tokenUtil from '../util/token'
-import renderService from '../service/renderService'
 
 export default {
   isLogin (req, res, next) {
@@ -16,7 +15,10 @@ export default {
       next()
     } else {
       // user has unlogined
-      res.send(renderService(req.url))
+      res.res.api(403, {}, {
+        code: -1,
+        msg: '未登录'
+      })
     }
   },
   isNotLogin (req, res, next) {

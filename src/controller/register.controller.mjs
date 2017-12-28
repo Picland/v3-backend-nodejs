@@ -1,6 +1,6 @@
 import path from 'path'
 import sha1 from 'sha1'
-import userService from '../service/userService'
+import userService from '../service/userService.service'
 import tokenUtil from '../util/token'
 
 export default {

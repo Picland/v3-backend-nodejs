@@ -1,5 +1,5 @@
 import sha1 from 'sha1'
-import userService from '../service/userService'
+import userService from '../service/userService.service'
 import tokenUtil from '../util/token'
 
 const login = async (req, res, next) => {

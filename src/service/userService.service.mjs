@@ -1,5 +1,5 @@
 import { User } from '../model/mongo'
-import { ObjectID } from 'mongolass'
+import Mongolass from 'mongolass'
 
 export default {
   // 注册一个用户
@@ -18,7 +18,7 @@ export default {
   // 通过userid码获取用户信息
   getUserById (userid) {
     return User
-      .findOne({_id: ObjectID(userid)})
+      .findOne({_id: Mongolass.ObjectID(userid)})
       .addCreatedAt()
       .exec()
   },

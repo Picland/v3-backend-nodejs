@@ -8,7 +8,7 @@ import expressWinston from 'express-winston'
 import favicon from 'serve-favicon'
 import resApi from 'res.api'
 import pkg from './package.json'
-import formidable from './src/middleware/formidable'
+import formidable from './src/middleware/formidable.middleware'
 import api from './src/api'
 
 const server = express()
@@ -18,23 +18,16 @@ server.use(cookieParser())
 server.use(resApi)
 
 // --------------------------------------------------------------------------
-// View Engine
-// --------------------------------------------------------------------------
-server.engine('.html', require('ejs').__express)
-server.set('views', path.join(__dirname, './src/view'))
-server.set('view engine', 'html')
-
-// --------------------------------------------------------------------------
 // Static Resource
 // --------------------------------------------------------------------------
-server.use(favicon(path.join(__dirname, './static', 'favicon.ico')))
-server.use(express.static(path.join(__dirname, './static')))
+server.use(favicon(path.join('./static', 'favicon.ico')))
+server.use(express.static(path.join('./static')))
 
 // --------------------------------------------------------------------------
 // Form and File Upload Middleware
 // --------------------------------------------------------------------------
 server.use(formidable({
-  uploadDir: path.join(__dirname, './static/img'),
+  uploadDir: path.join('./static/img'),
   keepExtensions: true
 }))
 
