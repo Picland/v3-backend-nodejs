@@ -4,25 +4,20 @@ module.exports = {
     port: +process.env.PORT || 8888
   },
   mongodb: {
-    host: 'localhost',
-    user: 'porta',
+    host: '127.0.0.1',
+    username: 'porta',
     password: 'porta123',
     database: 'earth-development',
     port: 27017
   },
   mysql: {
-    host: '127.0.0.1',
-    user: 'porta',
-    password: 'porta',
-    database: 'earth-development',
-    port: 3306,
     dialect: 'mysql',
-    timezone: '+08:00',
+    database: 'earth-development',
     operatorsAliases: false,
-    pool: {
-      max: 5,
-      min: 0,
-      idle: 30000
-    }
+    host: 'localhost',
+    port: 3306,
+    username: 'porta',
+    password: 'porta',
+    timezone: '+08:00'
   }
 }

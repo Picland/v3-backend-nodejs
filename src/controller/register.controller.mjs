@@ -1,6 +1,7 @@
 import path from 'path'
 import sha1 from 'sha1'
 import userService from '../service/userService.service'
+// import userModel from '../model/user.model'
 import tokenUtil from '../util/token'
 
 export default {
@@ -69,6 +70,7 @@ export default {
     }
     try {
       let result = await userService.insert(user)
+      // let result = await userModel.register(user)
       // 此 user 是插入 mongodb 后的值，包含 _id
       user = result.ops[0]
       delete user.password

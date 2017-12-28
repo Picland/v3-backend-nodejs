@@ -1,9 +1,3 @@
 {
-  "extends": ["standard"],
-  "env": {
-    "browser": false,
-    "node": true,
-    "es6": true,
-  },
-  "parser": "babel-eslint",
+  "extends": "standard"
 }

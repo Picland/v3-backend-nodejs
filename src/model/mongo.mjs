@@ -1,16 +1,10 @@
-/**
- * 预定义模式(predefined schema)进行写数据库时的校验
- * 并创建collection
- */
-
 import config from 'config-lite'
 import Mongolass from 'mongolass'
 import moment from 'moment'
 import objectIdToTimestamp from 'objectid-to-timestamp'
 
 const mongolass = new Mongolass()
-console.log(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}?authSource=admin`)
-mongolass.connect(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}?authSource=admin`)
+mongolass.connect(`mongodb://${config.mongodb.username}:${config.mongodb.password}@${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}?authSource=admin`)
 
 // 根据 id 生成创建时间 created_at
 mongolass.plugin('addCreatedAt', {
