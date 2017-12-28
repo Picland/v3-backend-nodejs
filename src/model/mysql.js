@@ -1,33 +1,21 @@
-import Sequelize from 'sequelize'
+import Sequelize, { STRING, CHAR } from 'sequelize'
 import config from 'config-lite'
 
-const { database, username, password, host } = config.mysql
-const sequelize = new Sequelize(database, username, password, {
-  host,
-  dialect: 'mysql',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 30000
-  },
-  define: {
-    timestamps: false
-  }
-})
+const sequelize = new Sequelize(config.mysql)
 
 const User = sequelize.define('user', {
-  phoneNumber: {
-    type: Sequelize.STRING(50),
+  phone_number: {
+    type: STRING(50),
     primaryKey: true
   },
-  password: Sequelize.STRING(50),
-  name: Sequelize.STRING(100),
-  gender: Sequelize.BOOLEAN,
-  avatar: Sequelize.STRING(100),
-  bio: Sequelize.STRING(100),
-  email: Sequelize.STRING(100),
-  createdAt: Sequelize.DATE,
-  updatedAt: Sequelize.DATE
+  password: STRING(50),
+  name: STRING(100),
+  gender: CHAR(1),
+  avatar: STRING(100),
+  bio: STRING(100),
+  email: STRING(100)
+}, {
+  freezeTableName: true
 })
 
 export {

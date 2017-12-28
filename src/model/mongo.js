@@ -9,7 +9,8 @@ import moment from 'moment'
 import objectIdToTimestamp from 'objectid-to-timestamp'
 
 const mongolass = new Mongolass()
-mongolass.connect(config.mongodb)
+console.log(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}?authSource=admin`)
+mongolass.connect(`mongodb://${config.mongodb.user}:${config.mongodb.password}@${config.mongodb.host}:${config.mongodb.port}/${config.mongodb.database}?authSource=admin`)
 
 // 根据 id 生成创建时间 created_at
 mongolass.plugin('addCreatedAt', {
