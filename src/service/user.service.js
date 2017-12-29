@@ -1,31 +1,36 @@
-import { User } from '../model/mongo'
-import Mongolass from 'mongolass'
+import User, * as userModel from '../model/user.model'
+
+/**
+ * @public
+ * @param {object} [user]
+ * @return {object}
+ */
+const register = user => userModel.register(user)
+
+/**
+ * @public
+ * @param {string} [phoneNumber]
+ * @return {object}
+ */
+// todo 把phone_number放到model层做名称映射
+const getUserByPhone = phoneNumber => userModel.getUserInfo({phone_number: phoneNumber})
+
+/**
+ * @public
+ * @param {string} [userId]
+ * @return {object}
+ */
+const getUserById = userId => userModel.getUserInfo({id: userId})
+
+// 根据用户ID修改用户信息
+const updateUserInfo = async (userId, data) => {
+  await User.update({_id: userId}, { $set: data }).exec()
+  return User.findOne({ _id: userId }).exec()
+}
 
 export default {
-  // 注册一个用户
-  insert (user) {
-    return User.insert(user).exec()
-  },
-
-  // 通过手机号码获取用户信息
-  getUserByPhone (phoneNumber) {
-    return User
-      .findOne({ phoneNumber: phoneNumber })
-      .addCreatedAt()
-      .exec()
-  },
-
-  // 通过userid码获取用户信息
-  getUserById (userid) {
-    return User
-      .findOne({_id: Mongolass.ObjectID(userid)})
-      .addCreatedAt()
-      .exec()
-  },
-
-  // 根据用户ID修改用户信息
-  async updateUserInfo (userId, data) {
-    await User.update({_id: userId}, { $set: data }).exec()
-    return User.findOne({ _id: userId }).exec()
-  }
+  register,
+  getUserByPhone,
+  getUserById,
+  updateUserInfo
 }

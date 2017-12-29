@@ -1,7 +1,7 @@
 import path from 'path'
 import sha1 from 'sha1'
-import userService from '../service/userService.service'
-// import userModel from '../model/user.model'
+import uuid from 'uuid'
+import userService from '../service/user.service'
 import tokenUtil from '../util/token'
 
 export default {
@@ -60,6 +60,7 @@ export default {
 
     // 待写入数据库的用户信息
     let user = {
+      id: uuid.v4(),
       phoneNumber,
       name,
       password,
@@ -69,21 +70,18 @@ export default {
       email
     }
     try {
-      let result = await userService.insert(user)
-      // let result = await userModel.register(user)
-      // 此 user 是插入 mongodb 后的值，包含 _id
-      user = result.ops[0]
-      delete user.password
-      const token = tokenUtil.generateToken({ userId: user._id })
+      const result = await userService.register(user)
+      const userId = result.id
+      const token = tokenUtil.generateToken({ userId })
       res.cookie('token', token, {httpOnly: true})
-      return res.api(201, {user: {'_id': user._id}}, {
+      return res.api(201, {user: {'_id': userId}}, {
         code: 0,
         msg: '注册成功'
       })
     } catch (e) {
       // 注册失败，异步删除上传的头像
       // req.files.avatar && fs.unlink(req.files.avatar.path)
-      if (e.message.match('E11000 duplicate key')) {
+      if (e.name.match('UniqueConstraintError')) {
         return res.api(403, {}, {
           code: -1,
           msg: '账号已经被注册'

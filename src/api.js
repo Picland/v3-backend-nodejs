@@ -13,3 +13,6 @@ export default server => {
   server.post('/api/v1/updateUserInfo', auth.isLogin, userController.updateUserInfo)
   server.post('/api/v1/updateUserAvatar', auth.isLogin, userController.updateUserAvatar)
 }
+
+// 将下划线转化为大写字母
+// husky

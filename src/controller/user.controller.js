@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import sha1 from 'sha1'
-import userService from '../service/userService.service'
+import userService from '../service/user.service'
 import tokenUtil from '../util/token'
 
 const getOwnInfo = async (req, res, next) => {
@@ -31,7 +31,6 @@ const getOwnInfo = async (req, res, next) => {
 const getUserInfo = async (req, res, next) => {
   try {
     const user = await userService.getUserById(req.params.id)
-    delete user.password
     res.api({user})
   } catch (e) {
     res.api(403, {}, {

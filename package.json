@@ -12,9 +12,7 @@
   "scripts": {
     "dev": "better-npm-run dev",
     "dev:dashboard": "better-npm-run dev:dashboard",
-    "presandbox": "better-npm-run presandbox",
     "sandbox": "better-npm-run sandbox",
-    "preprod": "better-npm-run preprod",
     "prod": "better-npm-run prod",
     "check:conflict": "scripty",
     "check:eslint": "scripty"
@@ -86,6 +84,7 @@
     "sequelize": "^4.24.0",
     "serve-favicon": "^2.4.1",
     "sha1": "1.1.1",
+    "uuid": "^3.1.0",
     "winston": "^2.3.1"
   },
   "devDependencies": {
