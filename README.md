@@ -10,113 +10,26 @@
 
 ## Introduction
 
-Earth(version3-inside) is a photography website built by NodeJS, ReactStack and MongoDB
+Earth-Backend(version3-inside) is a photography website built by NodeJS and MySQL
 
 ## Main Requirements
 
-* react: `^16.0.0`
-* react-router: `^4.0.0`
-* node: `^8.0.0`
-* mongodb: `^3.4.2`
-
-## Init Database
-
-If you want to have a try, just clone the project to your disk
-
-Init database, run this :
-
-- OS X
-```shell
-brew update
-brew install mongodb
-# set a data folder to store its files
-mkdir -p /data/db
-# start mongodb
-mongod
-# creater user with auth (open another terminal)
-mongo
-> use admin
-> db.createUser({user:"porta",pwd:"porta123",roles:["root"]})
-# restart mongodb
-db.shutdownServer()
-mongod --auth
-```
-
-- Linux(CentOS)
-```shell
-# add config file
-vi /etc/yum.repos.d/mongodb.repo
-```
-
-copy this, paste to `mongodb.repo` save and quit
-```bash
-[mongodb-org-3.4]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.4/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-3.4.asc
-```
-
-then install by yum
-```shell
-yum install -y mongodb-org
-# set a data folder to store its files
-mkdir -p /data/db
-# start mongodb
-service mongod start
-```
-
-Add auth for Database
-```shell
-# creater user with auth (should start mongod first)
-mongo
-> use admin
-> db.createUser({user:"porta",pwd:"porta123",roles:["root"]})
-# change the config of mongod
-vi /etc/mongod.conf
-# then edit this config
-security:
-   authorization: "enabled"
-# restart mongodb
-service mongod restart
-```
-
-- [More MongoDB Installation](https://docs.mongodb.com/master/administration/install-community/)
-- [MongoDB Tutorial English](https://www.tutorialspoint.com/mongodb/index.htm)
-- [MongoDB Tutorial Chinese](http://www.runoob.com/mongodb/mongodb-tutorial.html)
-- [MongoDB Experience Chinese](https://www.teakki.com/p/57e234416ef0382919521692)
-- Download MongoDB GUI: [Robo 3T](https://robomongo.org/)
+* node: `^8.9.0`
+* mysql: `^5.7.0`
 
 ## Quick start
 
 1. ENV: development (feature and dev branch)
 ```shell
-# step1 start webpack server for dev
-npm run webpack
-# step2 start app server for dev
 npm run dev
-# step3 open the browser
-open http://localhost:3000
-```
-2. ENV: sandbox (feature and dev branch)
-
-```shell
-# for devs to pre-deploy and debug locally
-# step1 only need to run this command
-npm run sandbox:debug
-# step2 open the browser
-open http://localhost:8890
 ```
 
 3. ENV: sandbox (release branch)
 ```shell
-# step1 only need to run this command
 npm run sandbox
 ```
 
 4. ENV: production (master branch)
 ```shell
-# step1 only need to run this command
 npm run prod
 ```
