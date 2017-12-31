@@ -37,8 +37,7 @@ const register = user => {
   })
 }
 
-const getUserInfo = async filter => {
-  const result = (await User.find({where: filter})).dataValues
+const getUserMapping = result => {
   return {
     id: result.id,
     phoneNumber: result.phone_number,
@@ -47,15 +46,25 @@ const getUserInfo = async filter => {
     gender: result.gender,
     avatar: result.avatar,
     bio: result.bio,
+    email: result.email,
     createdAt: result.created_at
   }
 }
 
-User.sync()
+const getUserInfo = async filter => {
+  const result = (await User.find({where: filter})).dataValues
+  return getUserMapping(result)
+}
 
-export default User
+const updateUserInfo = async (userId, data) => {
+  await User.update(data, { where: {id: userId} })
+  return getUserInfo({id: userId})
+}
+
+User.sync()
 
 export {
   register,
-  getUserInfo
+  getUserInfo,
+  updateUserInfo
 }

@@ -74,7 +74,7 @@ export default {
       const userId = result.id
       const token = tokenUtil.generateToken({ userId })
       res.cookie('token', token, {httpOnly: true})
-      return res.api(201, {user: {'_id': userId}}, {
+      return res.api(201, {user: {id: userId}}, {
         code: 0,
         msg: '注册成功'
       })

@@ -1,4 +1,4 @@
-import User, * as userModel from '../model/user.model'
+import * as userModel from '../model/user.model'
 
 /**
  * @public
@@ -20,12 +20,23 @@ const getUserByPhone = phoneNumber => userModel.getUserInfo({phone_number: phone
  * @param {string} [userId]
  * @return {object}
  */
-const getUserById = userId => userModel.getUserInfo({id: userId})
+const getUserById = async userId => {
+  const user = await userModel.getUserInfo({id: userId})
+  delete user.password
+  return user
+}
 
-// 根据用户ID修改用户信息
+/**
+ * Update user info by user id.
+ *
+ * @public
+ * @param {string} [userId]
+ * @return {object}
+ */
 const updateUserInfo = async (userId, data) => {
-  await User.update({_id: userId}, { $set: data }).exec()
-  return User.findOne({ _id: userId }).exec()
+  const user = await userModel.updateUserInfo(userId, data)
+  delete user.password
+  return user
 }
 
 export default {

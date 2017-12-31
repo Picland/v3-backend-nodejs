@@ -3,13 +3,6 @@ module.exports = {
   server: {
     port: +process.env.PORT || 8888
   },
-  mongodb: {
-    host: '127.0.0.1',
-    username: 'porta',
-    password: 'porta123',
-    database: 'earth-development',
-    port: 27017
-  },
   mysql: {
     dialect: 'mysql',
     database: 'earth-development',

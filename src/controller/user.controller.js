@@ -12,7 +12,6 @@ const getOwnInfo = async (req, res, next) => {
     res.cookie('token', newTokent, {httpOnly: true})
     try {
       const user = await userService.getUserById(tokenUtil.decodeToken(newTokent).userId)
-      delete user.password
       res.api({user})
     } catch (e) {
       res.api(403, {}, {
@@ -67,7 +66,6 @@ const updateUserInfo = async (req, res, next) => {
           throw new Error('两次密码输入不一致')
         }
         let result = await userService.updateUserInfo(req.headers.userid, {password: newpassword2})
-        delete result.password
         res.api(result)
       } catch (e) {
         res.api(403, {}, {
@@ -84,7 +82,6 @@ const updateUserInfo = async (req, res, next) => {
   } else {
     try {
       let result = await userService.updateUserInfo(req.headers.userid, req.body)
-      delete result.password
       res.api(result)
     } catch (e) {
       res.api(403, {}, {

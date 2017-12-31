@@ -1,5 +1,5 @@
 import sha1 from 'sha1'
-import userService from '../service/userService.service'
+import userService from '../service/user.service'
 import tokenUtil from '../util/token'
 
 const login = async (req, res, next) => {
@@ -14,7 +14,7 @@ const login = async (req, res, next) => {
     }
     delete user.password
     // 客户端通过登录请求提交用户名和密码，服务端验证通过后生成一个 Token 与该用户进行关联，并将 Token 返回给客户端
-    const token = tokenUtil.generateToken({ userId: user._id })
+    const token = tokenUtil.generateToken({ userId: user.id })
     res.cookie('token', token, {httpOnly: true})
     return res.api(user, {
       code: 0,
