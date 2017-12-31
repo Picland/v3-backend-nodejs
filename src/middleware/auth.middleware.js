@@ -15,7 +15,7 @@ export default {
       next()
     } else {
       // user has unlogined
-      res.res.api(403, {}, {
+      res.api(403, {}, {
         code: -1,
         msg: '未登录'
       })

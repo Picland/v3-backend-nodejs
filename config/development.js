@@ -1,7 +1,7 @@
 module.exports = {
   tokenSecret: 'bm9kZXNlcnZlckFQSWp8dHNlY6JldA==',
   server: {
-    port: +process.env.PORT || 8888
+    port: 8888
   },
   mysql: {
     dialect: 'mysql',

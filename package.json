@@ -21,29 +21,25 @@
     "dev": {
       "command": "node runtime.js",
       "env": {
-        "NODE_ENV": "development",
-        "PORT": 8888
+        "NODE_ENV": "development"
       }
     },
     "dev:dashboard": {
       "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard runtime.js",
       "env": {
-        "NODE_ENV": "development",
-        "PORT": 8888
+        "NODE_ENV": "development"
       }
     },
     "sandbox": {
       "command": "pm2 start runtime.js --name 'earth-sanbox'",
       "env": {
-        "NODE_ENV": "sandbox",
-        "PORT": 8888
+        "NODE_ENV": "sandbox"
       }
     },
     "prod": {
       "command": "pm2 start runtime.js --name 'earth-production'",
       "env": {
-        "NODE_ENV": "production",
-        "PORT": 8888
+        "NODE_ENV": "production"
       }
     }
   },
