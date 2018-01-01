@@ -8,7 +8,10 @@ import config from 'config-lite'
 const sequelize = new Sequelize(config.mysql)
 
 const User = sequelize.define('user', {
-  id: Sequelize.CHAR(36),
+  id: {
+    type: Sequelize.CHAR(36),
+    validate: { isUUID: 4 }
+  },
   phone_number: {
     type: Sequelize.STRING(50),
     primaryKey: true
@@ -21,7 +24,8 @@ const User = sequelize.define('user', {
   email: Sequelize.STRING(100)
 }, {
   freezeTableName: true,
-  underscored: true
+  underscored: true,
+  charset: 'utf8'
 })
 
 const register = user => {

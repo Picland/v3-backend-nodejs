@@ -4,13 +4,13 @@ module.exports = {
     port: 8888
   },
   mysql: {
-    dialect: 'mysql',
-    database: 'earth-development',
-    operatorsAliases: false,
-    host: 'localhost',
-    port: 3306,
+    host: '127.0.0.1',
     username: 'porta',
     password: 'porta',
-    timezone: '+08:00'
+    database: 'earth-development',
+    port: 3306,
+    dialect: 'mysql',
+    timezone: '+08:00',
+    operatorsAliases: false
   }
 }

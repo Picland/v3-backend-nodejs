@@ -17,7 +17,7 @@ module.exports = {
   },
   mysql: {
     host: '127.0.0.1',
-    user: 'porta',
+    username: 'porta',
     password: 'porta',
     database: 'earth-development',
     port: 3306,
