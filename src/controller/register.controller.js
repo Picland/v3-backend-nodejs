@@ -5,17 +5,17 @@ import userService from '../service/user.service'
 import tokenUtil from '../util/token'
 
 export default {
-  async createUser (req, res, next) {
-    let phoneNumber = req.body.account
-    let inviteCode = req.body.inviteCode
-    let password = req.body.password
-    let name = req.body.name || ''
-    let gender = req.body.gender || 'x'
-    let bio = req.body.bio || ''
-    let avatar
-    let email = ''
-    // let avatar = req.files.avatar
-    // let repassword = req.body.repassword
+  async createUser (ctx, next) {
+    let {
+      account: phoneNumber,
+      inviteCode,
+      password,
+      name = '',
+      gender = 'x',
+      bio = '',
+      avatar = '',
+      email = ''
+    } = ctx.request.body
 
     // 校验参数
     try {
@@ -49,7 +49,7 @@ export default {
     } catch (e) {
       // 注册失败，异步删除上传的头像
       // avatar && avatar.path && fs.unlink(req.files.avatar.path)
-      return res.api(403, {}, {
+      return ctx.api(403, {}, {
         code: -1,
         msg: e.message
       })
@@ -73,8 +73,8 @@ export default {
       const result = await userService.register(user)
       const userId = result.id
       const token = tokenUtil.generateToken({ userId })
-      res.cookie('token', token, {httpOnly: true})
-      return res.api(201, {user: {id: userId}}, {
+      ctx.cookies.set('token', token)
+      return ctx.api(201, {user: {id: userId}}, {
         code: 0,
         msg: '注册成功'
       })
@@ -82,12 +82,12 @@ export default {
       // 注册失败，异步删除上传的头像
       // req.files.avatar && fs.unlink(req.files.avatar.path)
       if (e.name.match('UniqueConstraintError')) {
-        return res.api(403, {}, {
+        return ctx.api(403, {}, {
           code: -1,
           msg: '账号已经被注册'
         })
       }
-      next(e)
+      // return next(e)
     }
   }
 }

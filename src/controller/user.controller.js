@@ -4,87 +4,85 @@ import sha1 from 'sha1'
 import userService from '../service/user.service'
 import tokenUtil from '../util/token'
 
-const getOwnInfo = async (req, res, next) => {
-  const oldToken = tokenUtil.getToken(req)
-  if (oldToken && tokenUtil.verifyToken(oldToken)) {
-    // TODO: revoke old token
-    const newTokent = tokenUtil.refreshToken(oldToken)
-    res.cookie('token', newTokent, {httpOnly: true})
-    try {
-      const user = await userService.getUserById(tokenUtil.decodeToken(newTokent).userId)
-      res.api({user})
-    } catch (e) {
-      res.api(403, {}, {
-        code: -1,
-        msg: e.message
-      })
-    }
-  } else {
-    res.api(401, {}, {
+const getOwnInfo = async ctx => {
+  const oldToken = tokenUtil.getToken(ctx)
+  if (!oldToken || !tokenUtil.verifyToken(oldToken)) {
+    return ctx.api(401, {}, {
       code: -1,
       msg: '未登录无权限'
     })
   }
-}
-
-const getUserInfo = async (req, res, next) => {
+  // TODO: revoke old token
+  const newTokent = tokenUtil.refreshToken(oldToken)
+  ctx.cookies.set('token', newTokent)
   try {
-    const user = await userService.getUserById(req.params.id)
-    res.api({user})
+    const user = await userService.getUserById(tokenUtil.decodeToken(newTokent).userId)
+    return ctx.api(200, {user})
   } catch (e) {
-    res.api(403, {}, {
+    return ctx.api(403, {}, {
       code: -1,
       msg: e.message
     })
   }
 }
 
-const updateUserInfo = async (req, res, next) => {
-  if (req.body.password) {
-    if (req.body.newpassword1 && req.body.newpassword2) {
-      let {password, newpassword1, newpassword2} = req.body
-      // 基础校验
-      if (password.length < 6 || password.length > 16) {
-        throw new Error('密码长度须6-16位')
-      }
-      if (newpassword1.length < 6 || newpassword1.length > 16) {
-        throw new Error('密码长度须6-16位')
-      }
-      if (newpassword2.length < 6 || newpassword2.length > 16) {
-        throw new Error('密码长度须6-16位')
-      }
-      // 基础校验通过
-      password = sha1(password)
-      newpassword1 = sha1(newpassword1)
-      newpassword2 = sha1(newpassword2)
-      try {
-        const user = await userService.getUserById(req.headers.userid)
-        if (password !== user.password) {
-          throw new Error('原密码不正确')
-        }
-        if (newpassword1 !== newpassword2) {
-          throw new Error('两次密码输入不一致')
-        }
-        let result = await userService.updateUserInfo(req.headers.userid, {password: newpassword2})
-        res.api(result)
-      } catch (e) {
-        res.api(403, {}, {
-          code: -1,
-          msg: e.message
-        })
-      }
-    } else {
-      res.api(403, {}, {
+const getUserInfo = async ctx => {
+  try {
+    const user = await userService.getUserById(ctx.params.id)
+    return ctx.api(200, {user})
+  } catch (e) {
+    return ctx.api(403, {}, {
+      code: -1,
+      msg: e.message
+    })
+  }
+}
+
+const updateUserInfo = async ctx => {
+  if (ctx.request.body.password) {
+    if (!ctx.request.body.newpassword1 || !ctx.request.body.newpassword2) {
+      return ctx.api(403, {}, {
         code: -1,
         msg: '请填写新密码'
       })
     }
+    let { password, newpassword1, newpassword2 } = ctx.request.body
+    // 基础校验
+    if (password.length < 6 || password.length > 16) {
+      throw new Error('密码长度须6-16位')
+    }
+    if (newpassword1.length < 6 || newpassword1.length > 16) {
+      throw new Error('密码长度须6-16位')
+    }
+    if (newpassword2.length < 6 || newpassword2.length > 16) {
+      throw new Error('密码长度须6-16位')
+    }
+    // 基础校验通过
+    password = sha1(password)
+    newpassword1 = sha1(newpassword1)
+    newpassword2 = sha1(newpassword2)
+    try {
+      const user = await userService.getUserById(ctx.headers.userid)
+      if (password !== user.password) {
+        throw new Error('原密码不正确')
+      }
+      if (newpassword1 !== newpassword2) {
+        throw new Error('两次密码输入不一致')
+      }
+      let result = await userService.updateUserInfo(ctx.headers.userid, {password: newpassword2})
+      return ctx.api(200, result)
+    } catch (e) {
+      return ctx.api(403, {}, {
+        code: -1,
+        msg: e.message
+      })
+    }
   } else {
     try {
-      let result = await userService.updateUserInfo(req.headers.userid, req.body)
-      res.api(result)
+      let result = await userService.updateUserInfo(ctx.headers.userid, ctx.request.body)
+      return ctx.api(200, result)
     } catch (e) {
-      res.api(403, {}, {
+      return ctx.api(403, {}, {
         code: -1,
         msg: e.message
       })
@@ -92,22 +90,21 @@ const updateUserInfo = async (req, res, next) => {
   }
 }
 
-const updateUserAvatar = async (req, res, next) => {
-  const avatar = req.files.files
+const updateUserAvatar = async ctx => {
+  const avatar = ctx.request.files.files
   const body = {
     avatar: avatar.path.split(path.sep).pop()
   }
   try {
-    let result = await userService.updateUserInfo(req.headers.userid, body)
-    delete result.password
-    res.api(201, result, {
+    let result = await userService.updateUserInfo(ctx.headers.userid, body)
+    return ctx.api(201, result, {
       code: 0,
       msg: '上传成功'
     })
   } catch (e) {
     // 上传头像失败，异步删除上传的头像
     avatar && avatar.path && fs.unlink(avatar.path)
-    res.api(403, {}, {
+    return ctx.api(403, {}, {
       code: -1,
       msg: e.message
     })

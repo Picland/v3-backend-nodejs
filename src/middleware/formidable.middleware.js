@@ -11,19 +11,20 @@ function parse (opts) {
   const form = new formidable.IncomingForm()
   Object.assign(form, opts)
 
-  return (req, res, next) => {
-    if (req.is('multipart/form-data')) {
-      form.parse(req, (err, fields, files) => {
-        if (err) {
-          next(err)
-          return
-        }
-        Object.assign(req, { fields, files })
-        next()
+  return async (ctx, next) => {
+    if (ctx.is('multipart/form-data')) {
+      await new Promise((resolve, reject) => {
+        form.parse(ctx.req, (err, fields, files) => {
+          if (err) {
+            reject(err)
+          } else {
+            Object.assign(ctx.request, { fields, files })
+            resolve()
+          }
+        })
       })
-    } else {
-      next()
     }
+    return next()
   }
 }
 
