@@ -71,6 +71,7 @@
     "koa-static": "^4.0.2",
     "koa.res.api": "^2.0.0",
     "lodash": "^4.17.4",
+    "log4js": "^2.4.1",
     "mysql2": "^1.5.1",
     "nodejs-dashboard": "^0.4.3",
     "pm2": "^2.4.6",
