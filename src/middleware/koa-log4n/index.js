@@ -1,4 +1,4 @@
-import logUtil from './log.util'
+import logUtil from './util'
 
 export default () => async (ctx, next) => {
   // 响应开始时间

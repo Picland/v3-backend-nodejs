@@ -1,5 +1,5 @@
 import log4js from 'log4js'
-import logConfig from './log.config'
+import logConfig from './config'
 
 // 加载配置文件
 log4js.configure(logConfig)
