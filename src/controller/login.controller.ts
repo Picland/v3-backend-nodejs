@@ -1,9 +1,10 @@
-import sha1 from 'sha1'
+import * as sha1 from 'sha1'
+import { Context } from 'koa'
 import userService from '../service/user.service'
-import tokenUtil from '../util/token'
+import * as tokenUtil from '../util/token'
 
-const login = async ctx => {
-  const {account, password} = ctx.request.body
+const login = async (ctx: Context) => {
+  const { account, password } = ctx.request.body
   try {
     let user = await userService.getUserByPhone(account)
     if (!user || (sha1(password) !== user.password)) {

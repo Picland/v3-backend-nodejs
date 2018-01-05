@@ -1,11 +1,12 @@
-import path from 'path'
-import sha1 from 'sha1'
-import uuid from 'uuid'
+import * as path from 'path'
+import * as sha1 from 'sha1'
+import * as uuid from 'uuid'
+import * as tokenUtil from '../util/token'
+import { Context } from 'koa'
 import userService from '../service/user.service'
-import tokenUtil from '../util/token'
 
 export default {
-  async createUser (ctx, next) {
+  async createUser (ctx: Context, next: Function) {
     let {
       account: phoneNumber,
       inviteCode,
@@ -70,11 +71,11 @@ export default {
       email
     }
     try {
-      const result = await userService.register(user)
+      const result: any = await userService.register(user)
       const userId = result.id
       const token = tokenUtil.generateToken({ userId })
       ctx.cookies.set('token', token)
-      return ctx.api(201, {user: {id: userId}}, {
+      return ctx.api(201, { user: { id: userId } }, {
         code: 0,
         msg: '注册成功'
       })

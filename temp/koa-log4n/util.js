@@ -1,5 +1,5 @@
-import log4js from 'log4js'
-import logConfig from './config'
+const log4js = require('log4js')
+const logConfig = require('./config')
 
 // 加载配置文件
 log4js.configure(logConfig)

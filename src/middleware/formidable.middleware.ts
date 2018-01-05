@@ -5,13 +5,14 @@
  * @reference https://github.com/noraesae/express-formidable
  */
 
-import formidable from 'formidable'
+import * as formidable from 'formidable'
+import { Context } from 'koa'
 
-function parse (opts) {
+function parse (options: Object) {
   const form = new formidable.IncomingForm()
-  Object.assign(form, opts)
+  Object.assign(form, options)
 
-  return async (ctx, next) => {
+  return async (ctx: Context, next: Function) => {
     if (ctx.is('multipart/form-data')) {
       await new Promise((resolve, reject) => {
         form.parse(ctx.req, (err, fields, files) => {

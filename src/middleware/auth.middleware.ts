@@ -2,10 +2,11 @@
  * JWT Auth Middleware
  */
 
-import tokenUtil from '../util/token'
+import * as tokenUtil from '../util/token'
+import { Context } from 'koa'
 
 export default {
-  isLogin (ctx, next) {
+  isLogin (ctx: Context, next: Function) {
     const oldToken = tokenUtil.getToken(ctx)
     // user has logined
     if (oldToken && tokenUtil.verifyToken(oldToken)) {
@@ -21,7 +22,7 @@ export default {
       })
     }
   },
-  isNotLogin (ctx, next) {
+  isNotLogin (ctx: Context, next: Function) {
     const token = tokenUtil.getToken(ctx)
     // user has logined
     if (token && tokenUtil.verifyToken(token)) {

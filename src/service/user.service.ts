@@ -2,26 +2,23 @@ import * as userModel from '../model/user.model'
 
 /**
  * @public
- * @param {object} [user]
  * @return {object}
  */
-const register = user => userModel.register(user)
+const register = (user: object) => userModel.register(user)
 
 /**
  * @public
- * @param {string} [phoneNumber]
  * @return {object}
  */
 // todo 把phone_number放到model层做名称映射
-const getUserByPhone = phoneNumber => userModel.getUserInfo({phone_number: phoneNumber})
+const getUserByPhone = (phoneNumber: string) => userModel.getUserInfo({ phone_number: phoneNumber })
 
 /**
  * @public
- * @param {string} [userId]
  * @return {object}
  */
-const getUserById = async userId => {
-  const user = await userModel.getUserInfo({id: userId})
+const getUserById = async (userId: string) => {
+  const user = await userModel.getUserInfo({ id: userId })
   delete user.password
   return user
 }
@@ -30,10 +27,9 @@ const getUserById = async userId => {
  * Update user info by user id.
  *
  * @public
- * @param {string} [userId]
  * @return {object}
  */
-const updateUserInfo = async (userId, data) => {
+const updateUserInfo = async (userId: string, data: object) => {
   const user = await userModel.updateUserInfo(userId, data)
   delete user.password
   return user

@@ -1,4 +1,4 @@
-import path from 'path'
+const path = require('path')
 
 const ROOT = process.cwd()
 
@@ -8,7 +8,7 @@ const errorLogPath = path.resolve(ROOT, './log/error/error')
 // 响应日志输出完整路径
 const responseLogPath = path.resolve(ROOT, './log/response/response')
 
-export default {
+module.exports = {
   appenders: {
     errorLogger: {
       'type': 'dateFile', // 日志类型

@@ -1,5 +1,7 @@
+import { Context } from 'koa'
+
 export default {
-  logout (ctx) {
+  logout (ctx: Context) {
     ctx.cookies.set('token')
     return ctx.api(200, {}, {
       'code': 0,
