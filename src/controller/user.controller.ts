@@ -1,11 +1,11 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as sha1 from 'sha1'
-import * as tokenUtil from '../util/token'
 import { Context } from 'koa'
-import userService from '../service/user.service'
+import * as tokenUtil from '../util/token'
+import * as userService from '../service/user.service'
 
-export async function getOwnInfo (ctx: Context) {
+export const getOwnInfo = async (ctx: Context) => {
   const oldToken = tokenUtil.getToken(ctx)
   if (!oldToken || !tokenUtil.verifyToken(oldToken)) {
     return ctx.api(401, {}, {
@@ -27,7 +27,7 @@ export async function getOwnInfo (ctx: Context) {
   }
 }
 
-export async function getUserInfo (ctx: Context) {
+export const getUserInfo = async (ctx: Context) => {
   try {
     const user = await userService.getUserById(ctx.params.id)
     return ctx.api(200, { user })
@@ -39,7 +39,7 @@ export async function getUserInfo (ctx: Context) {
   }
 }
 
-export async function updateUserInfo (ctx: Context) {
+export const updateUserInfo = async (ctx: Context) => {
   if (ctx.request.body.password) {
     if (!ctx.request.body.newpassword1 || !ctx.request.body.newpassword2) {
       return ctx.api(403, {}, {
@@ -91,7 +91,7 @@ export async function updateUserInfo (ctx: Context) {
   }
 }
 
-export async function updateUserAvatar (ctx: Context) {
+export const updateUserAvatar = async (ctx: Context) => {
   const avatar = (ctx.request as any).files.files
   const body = {
     avatar: avatar.path.split(path.sep).pop()

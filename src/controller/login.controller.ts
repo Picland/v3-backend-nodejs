@@ -1,9 +1,9 @@
 import * as sha1 from 'sha1'
 import { Context } from 'koa'
-import userService from '../service/user.service'
+import * as userService from '../service/user.service'
 import * as tokenUtil from '../util/token'
 
-const login = async (ctx: Context) => {
+export const login = async (ctx: Context) => {
   const { account, password } = ctx.request.body
   try {
     let user = await userService.getUserByPhone(account)
@@ -27,8 +27,4 @@ const login = async (ctx: Context) => {
       msg: e.message
     })
   }
-}
-
-export default {
-  login
 }

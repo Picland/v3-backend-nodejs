@@ -10,11 +10,11 @@ const secretKey = config.tokenSecret
 const TOKEN_EXPIRATION = '7 days' // normal token expires strategy：month for mobile，week for web
 const secret = Buffer.from(secretKey, 'base64')
 
-export function generateToken (payload: object) {
+export const generateToken = (payload: object) => {
   return jwt.sign(payload, secret, { expiresIn: TOKEN_EXPIRATION })
 }
 
-export function verifyToken (token: string, options?: jwt.VerifyOptions) {
+export const verifyToken = (token: string, options?: jwt.VerifyOptions) => {
   try {
     let payload = jwt.verify(token, secret, options)
     return payload
@@ -23,11 +23,9 @@ export function verifyToken (token: string, options?: jwt.VerifyOptions) {
   }
 }
 
-export function decodeToken (token: string) {
-  return jwt.decode(token)
-}
+export const decodeToken = (token: string) => jwt.decode(token)
 
-export function refreshToken (token: string) {
+export const refreshToken = (token: string) => {
   const payload: any = decodeToken(token)
   let newToken = null
   if (payload) {
@@ -36,7 +34,7 @@ export function refreshToken (token: string) {
   return newToken
 }
 
-export function getToken (ctx: Context) {
+export const getToken = (ctx: Context) => {
   if (ctx.headers.authorization && ctx.headers.authorization.split(' ')[0] === 'Bearer') { // Authorization: Bearer [token]
     return ctx.headers.authorization.split(' ')[1]
   }
