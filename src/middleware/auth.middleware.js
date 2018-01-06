@@ -5,33 +5,33 @@
 import tokenUtil from '../util/token'
 
 export default {
-  isLogin (req, res, next) {
-    const oldToken = tokenUtil.getToken(req)
+  isLogin (ctx, next) {
+    const oldToken = tokenUtil.getToken(ctx)
     // user has logined
     if (oldToken && tokenUtil.verifyToken(oldToken)) {
       // TODO: revoke old token
       const newTokent = tokenUtil.refreshToken(oldToken)
-      res.cookie('token', newTokent, {httpOnly: true})
-      next()
+      ctx.cookies.set('token', newTokent)
+      return next()
     } else {
       // user has unlogined
-      res.api(403, {}, {
+      return ctx.api(403, {}, {
         code: -1,
         msg: '未登录'
       })
     }
   },
-  isNotLogin (req, res, next) {
-    const token = tokenUtil.getToken(req)
+  isNotLogin (ctx, next) {
+    const token = tokenUtil.getToken(ctx)
     // user has logined
     if (token && tokenUtil.verifyToken(token)) {
-      res.api(403, {}, {
+      return ctx.api(403, {}, {
         code: -1,
         msg: '已登录'
       })
     } else {
       // user has unlogined and generate token next middleare
-      next()
+      return next()
     }
   }
   // case1: 没有过期，不刷新token

@@ -1,70 +1,39 @@
 import path from 'path'
-import express from 'express'
-import bodyParser from 'body-parser'
-import cookieParser from 'cookie-parser'
+import Koa from 'koa'
+import Router from 'koa-router'
+import serve from 'koa-static'
+import logger from 'koa-logger'
+import log4n from 'koa-log4n'
+import favicon from 'koa-favicon'
+import resApi from 'koa.res.api'
+import bodyParser from 'koa-bodyparser'
 import config from 'config-lite'
-import winston from 'winston'
-import expressWinston from 'express-winston'
-import favicon from 'serve-favicon'
-import resApi from 'res.api'
 import pkg from './package.json'
 import formidable from './src/middleware/formidable.middleware'
 import api from './src/api'
 
-const server = express()
-
-server.use(bodyParser.json())
-server.use(cookieParser())
-server.use(resApi)
+const server = new Koa()
+const router = new Router()
 
 // --------------------------------------------------------------------------
-// Static Resource
+// Main Middlewares
 // --------------------------------------------------------------------------
+server.use(log4n())
+server.use(logger())
+server.use(bodyParser())
+server.use(resApi())
 server.use(favicon(path.join('./static', 'favicon.ico')))
-server.use(express.static(path.join('./static')))
-
-// --------------------------------------------------------------------------
-// Form and File Upload Middleware
-// --------------------------------------------------------------------------
+server.use(serve(path.join('./static')))
 server.use(formidable({
   uploadDir: path.join('./static/img'),
   keepExtensions: true
 }))
 
 // --------------------------------------------------------------------------
-// Success Log
-// --------------------------------------------------------------------------
-server.use(expressWinston.logger({
-  transports: [
-    new (winston.transports.Console)({
-      json: true,
-      colorize: true
-    }),
-    new winston.transports.File({
-      filename: 'log/success.log'
-    })
-  ]
-}))
-
-// --------------------------------------------------------------------------
 // Restful API
 // --------------------------------------------------------------------------
-api(server)
-
-// --------------------------------------------------------------------------
-// Error Log
-// --------------------------------------------------------------------------
-server.use(expressWinston.errorLogger({
-  transports: [
-    new winston.transports.Console({
-      json: true,
-      colorize: true
-    }),
-    new winston.transports.File({
-      filename: 'log/error.log'
-    })
-  ]
-}))
+api(router)
+server.use(router.routes()).use(router.allowedMethods())
 
 // --------------------------------------------------------------------------
 // Start the Server

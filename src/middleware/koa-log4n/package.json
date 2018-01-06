@@ -1,0 +1,22 @@
+{
+  "name": "koa-log4n",
+  "version": "0.0.1",
+  "description": "koa logger middleware based on the log4js-node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "koa",
+    "middleware",
+    "log",
+    "log4js",
+    "node",
+    "logger"
+  ],
+  "author": "mrgaonju@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "log4js": "^2.4.1"
+  }
+}
