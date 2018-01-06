@@ -28,19 +28,6 @@ const User = sequelize.define('user', {
   charset: 'utf8'
 })
 
-const register = (user: any) => {
-  return User.create({
-    id: user.id,
-    phone_number: user.phoneNumber,
-    password: user.password,
-    name: user.name,
-    gender: user.gender,
-    avatar: user.avatar,
-    bio: user.bio,
-    email: user.email
-  })
-}
-
 const getUserMapping = (result: any) => {
   return {
     id: result.id,
@@ -55,20 +42,28 @@ const getUserMapping = (result: any) => {
   }
 }
 
-const getUserInfo = async (filter: Object) => {
-  const result: any = (await User.find({ where: filter }))
+export const register = async (user: any) => {
+  const result: any = await User.create({
+    id: user.id,
+    phone_number: user.phoneNumber,
+    password: user.password,
+    name: user.name,
+    gender: user.gender,
+    avatar: user.avatar,
+    bio: user.bio,
+    email: user.email
+  })
   return getUserMapping(result.dataValues)
 }
 
-const updateUserInfo = async (userId: string, data: Object) => {
+export const getUserInfo = async (filter: Object) => {
+  const result: any = await User.find({ where: filter })
+  return getUserMapping(result.dataValues)
+}
+
+export const updateUserInfo = async (userId: string, data: Object) => {
   await User.update(data, { where: { id: userId } })
   return getUserInfo({ id: userId })
 }
 
 User.sync()
-
-export {
-  register,
-  getUserInfo,
-  updateUserInfo
-}

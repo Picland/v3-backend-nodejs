@@ -1,19 +1,18 @@
 import * as sha1 from 'sha1'
-import { Context } from 'koa'
 import * as userService from '../service/user.service'
 import * as tokenUtil from '../util/token'
+import { Context } from 'koa'
 
 export const login = async (ctx: Context) => {
   const { account, password } = ctx.request.body
   try {
-    let user = await userService.getUserByPhone(account)
-    if (!user || (sha1(password) !== user.password)) {
+    let user = await userService.checkUser(account, password)
+    if (!user) {
       return ctx.api(403, {}, {
         code: -1,
         msg: '用户名或密码错误'
       })
     }
-    delete user.password
     // 客户端通过登录请求提交用户名和密码，服务端验证通过后生成一个 Token 与该用户进行关联，并将 Token 返回给客户端
     const token = tokenUtil.generateToken({ userId: user.id })
     ctx.cookies.set('token', token)

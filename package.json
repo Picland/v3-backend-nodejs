@@ -22,7 +22,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "node dist/server.js",
+      "command": "node $NODE_DEBUG_OPTION dist/server.js",
       "env": {
         "NODE_ENV": "development"
       }

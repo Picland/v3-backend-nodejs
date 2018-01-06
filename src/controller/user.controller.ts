@@ -1,9 +1,9 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as sha1 from 'sha1'
-import { Context } from 'koa'
 import * as tokenUtil from '../util/token'
 import * as userService from '../service/user.service'
+import { Context } from 'koa'
 
 export const getOwnInfo = async (ctx: Context) => {
   const oldToken = tokenUtil.getToken(ctx)
