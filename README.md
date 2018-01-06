@@ -1,21 +1,14 @@
-<p align="center"><a href="https://github.com/muwenzi/Earth"><img width="500" src="https://cloud.githubusercontent.com/assets/12554487/26024526/906f3518-3805-11e7-8163-9d18b6ae5292.png"></a></p>
+# Earth-Backend-NodeJS
 
-<p align="center"><a href="https://github.com/feross/standard" target="_blank"><img width="171"src="https://cdn.rawgit.com/feross/standard/master/badge.svg"></a></p>
+[![JavaScript Style Guide][style-image]][style-url]
 
-<p align="center">
-  <a href="https://travis-ci.org/muwenzi/Earth"><img src="https://travis-ci.com/muwenzi/Earth.svg?token=65SdnpsEfKTY1qP6fnyh&branch=master" alt="Build Status"></a>
-  <a href="https://github.com/muwenzi/Blog-Webapp/blob/master/LICENSE.md"><img src="https://img.shields.io/pypi/l/Django.svg" alt="License"></a>
-  <br>
-</p>
-
-## Introduction
+[![Build Status][travis-image]][travis-url] [![NPM version][node-image]][node-url]  [![Downloads][mysql-image]][mysql-url]
 
 Earth-Backend(version3-inside) is a photography website built by NodeJS and MySQL
 
-## Main Requirements
-
-* node: `^8.9.0`
-* mysql: `^5.7.0`
+## Pre-reqs
+- Install [Node.js][node-url]
+- Install [MySQL][mysql-url]
 
 ## Quick start
 
@@ -33,3 +26,24 @@ npm run sandbox
 ```shell
 npm run prod
 ```
+
+## License
+[![license][license-image]][license-url]
+
+
+[mysql-url]: https://dev.mysql.com/doc/refman/5.7/en/installing.html
+[mysql-image]: https://img.shields.io/badge/mysql-%3E%3D%205.7.0-yellow.svg?style=flat-square
+
+[node-url]: https://nodejs.org/en/
+[node-image]: https://img.shields.io/badge/node-%3E%3D%208.9.0-brightgreen.svg?style=flat-square
+
+[travis-url]: https://travis-ci.org
+[travis-image]: https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square
+
+[license-url]: https://github.com/muwenzi/Earth-Backend-NodeJS/blob/master/LICENSE
+[license-image]: https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square
+
+[style-url]: https://github.com/feross/standard
+[style-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
+
+[screenshot]: https://cloud.githubusercontent.com/assets/2230882/23556263/f471b648-0066-11e7-9fb9-b48955d4c83d.png
