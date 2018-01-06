@@ -1,10 +1,11 @@
-import fs from 'fs'
-import path from 'path'
-import sha1 from 'sha1'
-import userService from '../service/user.service'
-import tokenUtil from '../util/token'
+import * as fs from 'fs'
+import * as path from 'path'
+import * as sha1 from 'sha1'
+import * as tokenUtil from '../util/token'
+import * as userService from '../service/user.service'
+import { Context } from 'koa'
 
-const getOwnInfo = async ctx => {
+export const getOwnInfo = async (ctx: Context) => {
   const oldToken = tokenUtil.getToken(ctx)
   if (!oldToken || !tokenUtil.verifyToken(oldToken)) {
     return ctx.api(401, {}, {
@@ -16,8 +17,8 @@ const getOwnInfo = async ctx => {
   const newTokent = tokenUtil.refreshToken(oldToken)
   ctx.cookies.set('token', newTokent)
   try {
-    const user = await userService.getUserById(tokenUtil.decodeToken(newTokent).userId)
-    return ctx.api(200, {user})
+    const user = await userService.getUserById((tokenUtil.decodeToken(newTokent) as any).userId)
+    return ctx.api(200, { user })
   } catch (e) {
     return ctx.api(403, {}, {
       code: -1,
@@ -26,10 +27,10 @@ const getOwnInfo = async ctx => {
   }
 }
 
-const getUserInfo = async ctx => {
+export const getUserInfo = async (ctx: Context) => {
   try {
     const user = await userService.getUserById(ctx.params.id)
-    return ctx.api(200, {user})
+    return ctx.api(200, { user })
   } catch (e) {
     return ctx.api(403, {}, {
       code: -1,
@@ -38,7 +39,7 @@ const getUserInfo = async ctx => {
   }
 }
 
-const updateUserInfo = async ctx => {
+export const updateUserInfo = async (ctx: Context) => {
   if (ctx.request.body.password) {
     if (!ctx.request.body.newpassword1 || !ctx.request.body.newpassword2) {
       return ctx.api(403, {}, {
@@ -69,7 +70,7 @@ const updateUserInfo = async ctx => {
       if (newpassword1 !== newpassword2) {
         throw new Error('两次密码输入不一致')
       }
-      let result = await userService.updateUserInfo(ctx.headers.userid, {password: newpassword2})
+      let result = await userService.updateUserInfo(ctx.headers.userid, { password: newpassword2 })
       return ctx.api(200, result)
     } catch (e) {
       return ctx.api(403, {}, {
@@ -90,8 +91,8 @@ const updateUserInfo = async ctx => {
   }
 }
 
-const updateUserAvatar = async ctx => {
-  const avatar = ctx.request.files.files
+export const updateUserAvatar = async (ctx: Context) => {
+  const avatar = (ctx.request as any).files.files
   const body = {
     avatar: avatar.path.split(path.sep).pop()
   }
@@ -103,17 +104,10 @@ const updateUserAvatar = async ctx => {
     })
   } catch (e) {
     // 上传头像失败，异步删除上传的头像
-    avatar && avatar.path && fs.unlink(avatar.path)
+    avatar && avatar.path && fs.unlink(avatar.path, (e) => { throw e })
     return ctx.api(403, {}, {
       code: -1,
       msg: e.message
     })
   }
-}
-
-export default {
-  getOwnInfo,
-  getUserInfo,
-  updateUserInfo,
-  updateUserAvatar
 }

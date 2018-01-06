@@ -2,8 +2,8 @@
  * The definition of database table structure, operations and field mapping.
  *
  */
-import Sequelize from 'sequelize'
-import config from 'config-lite'
+import * as Sequelize from 'sequelize'
+import * as config from 'config-lite'
 
 const sequelize = new Sequelize(config.mysql)
 
@@ -28,20 +28,7 @@ const User = sequelize.define('user', {
   charset: 'utf8'
 })
 
-const register = user => {
-  return User.create({
-    id: user.id,
-    phone_number: user.phoneNumber,
-    password: user.password,
-    name: user.name,
-    gender: user.gender,
-    avatar: user.avatar,
-    bio: user.bio,
-    email: user.email
-  })
-}
-
-const getUserMapping = result => {
+const getUserMapping = (result: any) => {
   return {
     id: result.id,
     phoneNumber: result.phone_number,
@@ -55,20 +42,28 @@ const getUserMapping = result => {
   }
 }
 
-const getUserInfo = async filter => {
-  const result = (await User.find({where: filter})).dataValues
-  return getUserMapping(result)
+export const register = async (user: any) => {
+  const result: any = await User.create({
+    id: user.id,
+    phone_number: user.phoneNumber,
+    password: user.password,
+    name: user.name,
+    gender: user.gender,
+    avatar: user.avatar,
+    bio: user.bio,
+    email: user.email
+  })
+  return getUserMapping(result.dataValues)
 }
 
-const updateUserInfo = async (userId, data) => {
-  await User.update(data, { where: {id: userId} })
-  return getUserInfo({id: userId})
+export const getUserInfo = async (filter: Object) => {
+  const result: any = await User.find({ where: filter })
+  return getUserMapping(result.dataValues)
+}
+
+export const updateUserInfo = async (userId: string, data: Object) => {
+  await User.update(data, { where: { id: userId } })
+  return getUserInfo({ id: userId })
 }
 
 User.sync()
-
-export {
-  register,
-  getUserInfo,
-  updateUserInfo
-}
