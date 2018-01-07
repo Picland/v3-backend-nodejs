@@ -2,10 +2,10 @@
  * JWT Auth Middleware
  */
 
-import * as tokenUtil from '../util/token'
+import tokenUtil from '../util/token'
 import { Context } from 'koa'
 
-export const isLogin = (ctx: Context, next: Function) => {
+function isLogin (ctx: Context, next: Function) {
   const oldToken = tokenUtil.getToken(ctx)
   // user has logined
   if (oldToken && tokenUtil.verifyToken(oldToken)) {
@@ -15,24 +15,37 @@ export const isLogin = (ctx: Context, next: Function) => {
     return next()
   } else {
     // user has unlogined
-    return ctx.api(403, {}, {
-      code: -1,
-      msg: '未登录'
-    })
+    return ctx.api(
+      403,
+      {},
+      {
+        code: -1,
+        msg: '未登录'
+      }
+    )
   }
 }
-export const isNotLogin = (ctx: Context, next: Function) => {
+function isNotLogin (ctx: Context, next: Function) {
   const token = tokenUtil.getToken(ctx)
   // user has logined
   if (token && tokenUtil.verifyToken(token)) {
-    return ctx.api(403, {}, {
-      code: -1,
-      msg: '已登录'
-    })
+    return ctx.api(
+      403,
+      {},
+      {
+        code: -1,
+        msg: '已登录'
+      }
+    )
   } else {
     // user has unlogined and generate token next middleare
     return next()
   }
+}
+
+export default {
+  isLogin,
+  isNotLogin
 }
 // case1: 没有过期，不刷新token
 // if (tokenUtil.verifyToken(oldToken)) {

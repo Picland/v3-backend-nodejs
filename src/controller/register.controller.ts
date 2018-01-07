@@ -1,11 +1,11 @@
 import * as path from 'path'
 import * as sha1 from 'sha1'
 import * as uuid from 'uuid'
-import * as tokenUtil from '../util/token'
-import * as userService from '../service/user.service'
+import tokenUtil from '../util/token'
+import userService from '../service/user.service'
 import { Context } from 'koa'
 
-export const createUser = async (ctx: Context, next: Function) => {
+async function createUser (ctx: Context, next: Function) {
   let {
     account: phoneNumber,
     inviteCode,
@@ -19,7 +19,7 @@ export const createUser = async (ctx: Context, next: Function) => {
 
   // 校验参数
   try {
-    if (!(/^1[34578]\d{9}$/.test(phoneNumber))) {
+    if (!/^1[34578]\d{9}$/.test(phoneNumber)) {
       throw new Error('请输入正确的手机号码')
     }
     // if (!(name.length >= 1 && name.length <= 10)) {
@@ -49,10 +49,14 @@ export const createUser = async (ctx: Context, next: Function) => {
   } catch (e) {
     // 注册失败，异步删除上传的头像
     // avatar && avatar.path && fs.unlink(req.files.avatar.path)
-    return ctx.api(403, {}, {
-      code: -1,
-      msg: e.message
-    })
+    return ctx.api(
+      403,
+      {},
+      {
+        code: -1,
+        msg: e.message
+      }
+    )
   }
 
   // 明文密码加密
@@ -74,19 +78,31 @@ export const createUser = async (ctx: Context, next: Function) => {
     const userId = result.id
     const token = tokenUtil.generateToken({ userId })
     ctx.cookies.set('token', token)
-    return ctx.api(201, { user: { id: userId } }, {
-      code: 0,
-      msg: '注册成功'
-    })
+    return ctx.api(
+      201,
+      { user: { id: userId } },
+      {
+        code: 0,
+        msg: '注册成功'
+      }
+    )
   } catch (e) {
     // 注册失败，异步删除上传的头像
     // req.files.avatar && fs.unlink(req.files.avatar.path)
     if (e.name.match('UniqueConstraintError')) {
-      return ctx.api(403, {}, {
-        code: -1,
-        msg: '账号已经被注册'
-      })
+      return ctx.api(
+        403,
+        {},
+        {
+          code: -1,
+          msg: '账号已经被注册'
+        }
+      )
     }
     // return next(e)
   }
+}
+
+export default {
+  createUser
 }
