@@ -1,11 +1,11 @@
 import * as path from 'path'
 import * as sha1 from 'sha1'
 import * as uuid from 'uuid'
-import * as tokenUtil from '../util/token'
-import * as userService from '../service/user.service'
+import tokenUtil from '../util/token'
+import userService from '../service/user.service'
 import { Context } from 'koa'
 
-export const createUser = async (ctx: Context, next: Function) => {
+async function createUser (ctx: Context, next: Function) {
   let {
     account: phoneNumber,
     inviteCode,
@@ -19,7 +19,7 @@ export const createUser = async (ctx: Context, next: Function) => {
 
   // 校验参数
   try {
-    if (!(/^1[34578]\d{9}$/.test(phoneNumber))) {
+    if (!/^1[34578]\d{9}$/.test(phoneNumber)) {
       throw new Error('请输入正确的手机号码')
     }
     // if (!(name.length >= 1 && name.length <= 10)) {
@@ -89,4 +89,8 @@ export const createUser = async (ctx: Context, next: Function) => {
     }
     // return next(e)
   }
+}
+
+export default {
+  createUser
 }

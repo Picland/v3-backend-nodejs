@@ -1,11 +1,11 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import * as sha1 from 'sha1'
-import * as tokenUtil from '../util/token'
-import * as userService from '../service/user.service'
+import tokenUtil from '../util/token'
+import userService from '../service/user.service'
 import { Context } from 'koa'
 
-export const getOwnInfo = async (ctx: Context) => {
+async function getOwnInfo (ctx: Context) {
   const oldToken = tokenUtil.getToken(ctx)
   if (!oldToken || !tokenUtil.verifyToken(oldToken)) {
     return ctx.api(401, {}, {
@@ -27,7 +27,7 @@ export const getOwnInfo = async (ctx: Context) => {
   }
 }
 
-export const getUserInfo = async (ctx: Context) => {
+async function getUserInfo (ctx: Context) {
   try {
     const user = await userService.getUserById(ctx.params.id)
     return ctx.api(200, { user })
@@ -39,7 +39,7 @@ export const getUserInfo = async (ctx: Context) => {
   }
 }
 
-export const updateUserInfo = async (ctx: Context) => {
+async function updateUserInfo (ctx: Context) {
   if (ctx.request.body.password) {
     if (!ctx.request.body.newpassword1 || !ctx.request.body.newpassword2) {
       return ctx.api(403, {}, {
@@ -91,7 +91,7 @@ export const updateUserInfo = async (ctx: Context) => {
   }
 }
 
-export const updateUserAvatar = async (ctx: Context) => {
+async function updateUserAvatar (ctx: Context) {
   const avatar = (ctx.request as any).files.files
   const body = {
     avatar: avatar.path.split(path.sep).pop()
@@ -104,10 +104,21 @@ export const updateUserAvatar = async (ctx: Context) => {
     })
   } catch (e) {
     // 上传头像失败，异步删除上传的头像
-    avatar && avatar.path && fs.unlink(avatar.path, (e) => { throw e })
+    avatar &&
+      avatar.path &&
+      fs.unlink(avatar.path, e => {
+        throw e
+      })
     return ctx.api(403, {}, {
       code: -1,
       msg: e.message
     })
   }
+}
+
+export default {
+  getOwnInfo,
+  getUserInfo,
+  updateUserInfo,
+  updateUserAvatar
 }

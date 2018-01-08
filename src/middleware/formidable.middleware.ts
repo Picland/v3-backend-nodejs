@@ -8,7 +8,7 @@
 import * as formidable from 'formidable'
 import { Context } from 'koa'
 
-export default function parse (options: Object) {
+export default function (options: Object) {
   const form = new formidable.IncomingForm()
   Object.assign(form, options)
 

@@ -1,9 +1,9 @@
 import * as Router from 'koa-router'
-import * as auth from './middleware/auth.middleware'
-import * as loginController from './controller/login.controller'
-import * as logoutController from './controller/logout.controller'
-import * as userController from './controller/user.controller'
-import * as registerController from './controller/register.controller'
+import auth from './middleware/auth.middleware'
+import loginController from './controller/login.controller'
+import logoutController from './controller/logout.controller'
+import userController from './controller/user.controller'
+import registerController from './controller/register.controller'
 
 export default (router: Router) => {
   router.post('/api/v1/login', auth.isNotLogin, loginController.login)
