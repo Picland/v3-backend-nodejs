@@ -22,7 +22,7 @@
   },
   "betterScripts": {
     "dev": {
-      "command": "node $NODE_DEBUG_OPTION dist/server.js",
+      "command": "pandora dev",
       "env": {
         "NODE_ENV": "development"
       }
@@ -47,7 +47,10 @@
     }
   },
   "lint-staged": {
-    "*.ts": ["tslint --fix", "git add"]
+    "*.ts": [
+      "tslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "better-npm-run": "^0.1.0",
@@ -65,7 +68,7 @@
     "log4js": "^2.4.1",
     "mysql2": "^1.5.1",
     "nodejs-dashboard": "^0.4.3",
-    "pm2": "^2.4.6",
+    "pandora": "^1.6.18",
     "sequelize": "^4.24.0",
     "sha1": "1.1.1",
     "uuid": "^3.1.0"

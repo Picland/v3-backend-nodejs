@@ -27,7 +27,19 @@ npm run sandbox
 npm run prod
 ```
 
+## How to manage muti-process in Node.js
+
+Supported by [pandora.js](https://github.com/midwayjs/pandora)
+
+Features
+- ✔︎ Built-in process management
+- ✔︎ Dev Ops customization
+- ✔︎ Provide Metrics and Standard OpenTracing Implementation
+- ✔︎ Support lots of web frameworks
+
+
 ## License
+
 [![license][license-image]][license-url]
 
 

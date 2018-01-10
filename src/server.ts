@@ -38,5 +38,5 @@ server.use(router.routes()).use(router.allowedMethods())
 // Start the Server
 // --------------------------------------------------------------------------
 server.listen(config.server.port, () => {
-  console.log(`=> listening on http://localhost:${config.server.port}`)
+  console.log(`✔︎ listening on http://localhost:${config.server.port} from Process [pid = ${process.pid}]`)
 })
