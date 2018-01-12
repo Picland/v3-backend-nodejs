@@ -6,8 +6,8 @@ import * as logger from 'koa-logger'
 import * as favicon from 'koa-favicon'
 import * as resApi from 'koa.res.api'
 import * as bodyParser from 'koa-bodyparser'
-import * as config from 'config-lite'
-import * as log4n from '../temp/koa-log4n'
+import * as config from 'config'
+import * as log4n from '../../temp/koa-log4n/index'
 import formidable from './middleware/formidable.middleware'
 import setRouter from './router'
 
@@ -21,10 +21,10 @@ server.use(log4n())
 server.use(logger())
 server.use(bodyParser())
 server.use(resApi())
-server.use(favicon(path.join(__dirname, '../static', 'favicon.ico')))
-server.use(serve(path.join(__dirname, '../static')))
+server.use(favicon(path.join(__dirname, '../../static', 'favicon.ico')))
+server.use(serve(path.join(__dirname, '../../static')))
 server.use(formidable({
-  uploadDir: path.join(__dirname, '../static/img'),
+  uploadDir: path.join(__dirname, '../../static/img'),
   keepExtensions: true
 }))
 
@@ -37,6 +37,6 @@ server.use(router.routes()).use(router.allowedMethods())
 // --------------------------------------------------------------------------
 // Start the Server
 // --------------------------------------------------------------------------
-server.listen(config.server.port, () => {
-  console.log(`✔︎ listening on http://localhost:${config.server.port} from Process [pid = ${process.pid}]`)
+server.listen(config.get('server.port'), () => {
+  console.log(`✔︎ listening on http://localhost:${config.get('server.port')} from Process [pid = ${process.pid}]`)
 })

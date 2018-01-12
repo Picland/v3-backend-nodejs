@@ -5,7 +5,7 @@ module.exports = (pandora) => {
   pandora
     .process('master')
     .scale('auto')
-    .entry('./dist/server.js')
+    .entry('./dist/main/server.js')
 
   /**
   * you can custom workers scale number

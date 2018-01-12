@@ -2,7 +2,7 @@
   "name": "Earth",
   "version": "0.0.0",
   "private": true,
-  "main": "dist/server.js",
+  "main": "dist/main/server.js",
   "author": "muwenzi",
   "description": "muwenzi.com version3",
   "license": "BSD-3-Clause",
@@ -17,7 +17,9 @@
     "predev": "npm run build",
     "dev": "better-npm-run dev",
     "dev:dashboard": "better-npm-run dev:dashboard",
+    "presandbox": "npm run build",
     "sandbox": "better-npm-run sandbox",
+    "preprod": "npm run build",
     "prod": "better-npm-run prod"
   },
   "betterScripts": {
@@ -28,19 +30,19 @@
       }
     },
     "dev:dashboard": {
-      "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard dist/server.js",
+      "command": "nodejs-dashboard --port=8003 -- node -r nodejs-dashboard dist/main/server.js",
       "env": {
         "NODE_ENV": "development"
       }
     },
     "sandbox": {
-      "command": "pm2 start dist/server.js --name 'earth-sanbox'",
+      "command": "pm2 start dist/main/server.js --name 'earth-sanbox'",
       "env": {
         "NODE_ENV": "sandbox"
       }
     },
     "prod": {
-      "command": "pm2 start dist/server.js --name 'earth-production'",
+      "command": "pm2 start dist/main/server.js --name 'earth-production'",
       "env": {
         "NODE_ENV": "production"
       }
@@ -54,7 +56,7 @@
   },
   "dependencies": {
     "better-npm-run": "^0.1.0",
-    "config-lite": "^1.6.0",
+    "config": "^1.29.1",
     "formidable": "^1.1.1",
     "jsonwebtoken": "^8.1.0",
     "koa": "^2.4.1",
@@ -74,6 +76,7 @@
     "uuid": "^3.1.0"
   },
   "devDependencies": {
+    "@types/config": "0.0.33",
     "@types/formidable": "^1.0.30",
     "@types/jsonwebtoken": "^7.2.5",
     "@types/koa": "^2.0.43",

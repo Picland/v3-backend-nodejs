@@ -8,12 +8,11 @@
 import * as formidable from 'formidable'
 import { Context } from 'koa'
 
-export default function (options: Object) {
-  const form = new formidable.IncomingForm()
-  Object.assign(form, options)
-
-  return async (ctx: Context, next: Function) => {
-    if (ctx.is('multipart/form-data')) {
+export default (options: Object) => async (ctx: Context, next: Function) => {
+  if (ctx.is('multipart/form-data')) {
+    const form = new formidable.IncomingForm()
+    Object.assign(form, options)
+    try {
       await new Promise((resolve, reject) => {
         form.parse(ctx.req, (err, fields, files) => {
           if (err) {
@@ -24,7 +23,9 @@ export default function (options: Object) {
           }
         })
       })
+    } catch (e) {
+      return next(e)
     }
-    return next()
   }
+  return next()
 }

@@ -1,0 +1,23 @@
+version: "3"
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    expose:
+      - "3306"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+    volumes:
+      - $HOME/DockerData/mysql:/var/lib/mysql
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci --max-connections=1000 --default-time-zone=Asia/Shanghai
+  web:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links:
+      - mysql

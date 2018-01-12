@@ -3,10 +3,10 @@
  */
 
 import * as jwt from 'jsonwebtoken'
-import * as config from 'config-lite'
+import * as config from 'config'
 import { Context } from 'koa'
 
-const secretKey = config.tokenSecret
+const secretKey: string = config.get('tokenSecret')
 const TOKEN_EXPIRATION = '7 days' // normal token expires strategy：month for mobile，week for web
 const secret = Buffer.from(secretKey, 'base64')
 

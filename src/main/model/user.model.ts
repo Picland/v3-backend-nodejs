@@ -3,9 +3,9 @@
  *
  */
 import * as Sequelize from 'sequelize'
-import * as config from 'config-lite'
+import * as config from 'config'
 
-const sequelize = new Sequelize(config.mysql)
+const sequelize = new Sequelize(config.get('mysql'))
 
 const User = sequelize.define('user', {
   id: {
