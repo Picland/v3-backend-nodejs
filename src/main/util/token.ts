@@ -1,5 +1,5 @@
 /**
- * JWT token管理
+ * JWT token management
  */
 
 import * as jwt from 'jsonwebtoken'
