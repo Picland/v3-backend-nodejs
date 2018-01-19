@@ -10,3 +10,18 @@ baseUri: "http://127.0.0.1:8888/api/v1"
 /register:
   post:
     description: "new user register"
+/logout:
+  get:
+    description: "logout"
+/user:
+  get:
+    description: "get own info"
+  /{id}:
+    get:
+      description: "get user info by id"
+/updateUserInfo:
+  post:
+    description: "update user info"
+/updateUserAvatar:
+  post:
+    description: "update user avatar"
