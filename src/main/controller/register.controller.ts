@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import * as path from 'path'
 import * as sha1 from 'sha1'
 import * as uuid from 'uuid'
@@ -22,18 +23,17 @@ async function createUser (ctx: Context, next: Function) {
     if (!/^1[34578]\d{9}$/.test(phoneNumber)) {
       throw new Error('请输入正确的手机号码')
     }
-    // if (!(name.length >= 1 && name.length <= 10)) {
-    //   throw new Error('名字请限制在 1-10 个字符')
-    // }
-    // if (!['m', 'f', 'x'].includes(gender)) {
-    //   throw new Error('性别只能是男、女或保密')
-    // }
-    // if (!(bio.length >= 0 && bio.length <= 30)) {
-    //   throw new Error('个人简介请限制在 1-30 个字符')
-    // }
+    if (!(name.length >= 1 && name.length <= 10)) {
+      throw new Error('名字请限制在 1-10 个字符')
+    }
+    if (!['m', 'f', 'x'].includes(gender)) {
+      throw new Error('性别只能是男、女或保密')
+    }
+    if (!(bio.length >= 0 && bio.length <= 30)) {
+      throw new Error('个人简介请限制在 1-30 个字符')
+    }
     if (!avatar) {
       avatar = 'default_avatar.jpg'
-      // throw new Error('缺少头像')
     } else {
       avatar = avatar.path.split(path.sep).pop()
     }
@@ -43,12 +43,9 @@ async function createUser (ctx: Context, next: Function) {
     if (password.length < 6 || password.length > 16) {
       throw new Error('密码长度须6-16位')
     }
-    // if (password !== repassword) {
-    //   throw new Error('两次输入密码不一致')
-    // }
   } catch (e) {
     // 注册失败，异步删除上传的头像
-    // avatar && avatar.path && fs.unlink(req.files.avatar.path)
+    // avatar !== 'default_avatar.jpg' && avatar.path && fs.unlink(ctx.request.files.files.avatar.path)
     return ctx.api(403, {}, {
       code: -1,
       msg: e.message

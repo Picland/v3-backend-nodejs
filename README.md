@@ -53,7 +53,7 @@ Features
 [travis-image]: https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square
 
 [license-url]: https://github.com/muwenzi/Earth-Backend-NodeJS/blob/master/LICENSE
-[license-image]: https://img.shields.io/badge/license-MIT%20License-blue.svg?style=flat-square
+[license-image]: https://img.shields.io/github/license/muwenzi/Earth-Backend-NodeJS.svg?style=flat-square
 
 [style-url]: https://github.com/feross/standard
 [style-image]: https://cdn.rawgit.com/feross/standard/master/badge.svg
