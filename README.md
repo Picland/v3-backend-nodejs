@@ -2,7 +2,7 @@
 
 [![JavaScript Style Guide][style-image]][style-url]
 
-[![Build Status][travis-image]][travis-url] [![NPM version][node-image]][node-url]  [![Downloads][mysql-image]][mysql-url]
+[![Node Version][node-image]][node-url]  [![Downloads][mysql-image]][mysql-url] [![License][license-image]][license-url] [![Build Status][travis-image]][travis-url]
 
 Earth-Backend(version3-inside) is a photography website built by NodeJS and MySQL
 
@@ -40,7 +40,7 @@ Features
 
 ## License
 
-[![license][license-image]][license-url]
+[![License][license-image]][license-url]
 
 
 [mysql-url]: https://dev.mysql.com/doc/refman/5.7/en/installing.html
@@ -49,8 +49,8 @@ Features
 [node-url]: https://nodejs.org/en/
 [node-image]: https://img.shields.io/badge/node-%3E%3D%208.9.0-brightgreen.svg?style=flat-square
 
-[travis-url]: https://travis-ci.org
-[travis-image]: https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square
+[travis-url]: https://travis-ci.org/RookieBaby/rookie-backend-nodejs
+[travis-image]: https://img.shields.io/travis/RookieBaby/rookie-backend-nodejs/master.svg?style=flat-square
 
 [license-url]: https://github.com/muwenzi/Earth-Backend-NodeJS/blob/master/LICENSE
 [license-image]: https://img.shields.io/github/license/muwenzi/Earth-Backend-NodeJS.svg?style=flat-square
